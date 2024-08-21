@@ -33,11 +33,7 @@ public class App extends JFrame {
 				if (selectedNode != null) {
 					System.out.println("Selected: " + selectedNode.getUserObject().toString());
                     Folder selectedFolder = rootFolder.searchFolder(rootFolder, selectedNode.getUserObject().toString());
-                    listFolderPanel.removeAll();
                     listFolderPanel.setCurrentFolder(selectedFolder);
-                    listFolderPanel.repaint();
-                    listFolderPanel.revalidate();
-
                 }
 			}
 		});
