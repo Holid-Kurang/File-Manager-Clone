@@ -1,5 +1,5 @@
 
-public class File {
+class File {
 	String nama;
 	String type;
 	int size;

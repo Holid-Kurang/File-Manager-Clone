@@ -83,7 +83,6 @@ class TreePanel extends JScrollPane {
 		Enumeration<?> enumeration = root.depthFirstEnumeration();
 		while (enumeration.hasMoreElements()) {
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) enumeration.nextElement();
-			System.out.println("Enumerating node: " + node.getUserObject()); // Debug statement
 			if (node.getUserObject().equals(folder.nama))
 				return node;
 		}

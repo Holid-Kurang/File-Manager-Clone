@@ -1,85 +1,75 @@
+
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Folder {
-	String nama;
-	Folder parent;
-	ArrayList<Folder> childFolder = new ArrayList<>();
-	ArrayList<File> childFile = new ArrayList<>();
+class Folder {
 
-	Folder(String nama, Folder parent) {
-		this.nama = nama;
-		this.parent = parent;
-	}
+    String nama;
+    Folder parent;
+    ArrayList<Folder> childFolder = new ArrayList<>();
+    ArrayList<File> childFile = new ArrayList<>();
 
-	void addFolder(String nama, Folder parent) {
-		Folder newFolder = new Folder(nama, parent);
-		childFolder.add(newFolder);
-	}
+    Folder(String nama, Folder parent) {
+        this.nama = nama;
+        this.parent = parent;
+    }
 
-	Folder[] searchAll(Folder root, String folderName) {
-		if (root == null)
-			return null;
+    void addFolder(String nama, Folder parent) {
+        Folder newFolder = new Folder(nama, parent);
+        childFolder.add(newFolder);
+    }
 
-		Stack<Folder> stack = new Stack<>();
-		stack.push(root);
-
-		ArrayList<Folder> hasilSearch = new ArrayList<>();
-		while (!stack.isEmpty()) {
-			Folder current = stack.pop();
-			if (current.nama.contains(folderName)) {
-				hasilSearch.add(current);
-				// hasilSearch.tambahFolder(current.nama, current.parent);
+    void deleteFolder(String nama, Folder root) {
+        Folder folder = searchFolder(root, nama);
+		if (folder != null) {
+			if(folder.parent == null){
+				return;
 			}
+            folder.parent.childFolder.remove(folder);
+        }
+    }
 
-			// ListFolder childFolders = current.childFolder;
-			// Folder child = current.childFolder.head;
+    Folder searchFolder(Folder root, String folderName) {
+        if (root == null) {
+            return null;
+        }
 
-			// ListFolderNode temp = new ListFolderNode();
-			// while (child != null) {
-			// temp.add(child);
-			// child = child.next;
-			// }
+        Stack<Folder> stack = new Stack<>();
+        stack.push(root);
 
-			ArrayList<Folder> temp = new ArrayList<>();
-			for (Folder child : current.childFolder) {
-				temp.add(child);
-			}
+        while (!stack.isEmpty()) {
+            Folder current = stack.pop();
+            if (current.nama.equals(folderName)) {
+                return current;
+            }
 
-			// FolderNode currentTemp = temp.head;
-			// while (currentTemp != null) {
-			// stack.push(currentTemp.folder);
-			// currentTemp = currentTemp.next;
-			// }
-			for (Folder currentTemp : temp) {
-				stack.push(currentTemp);
-			}
-		}
-		return hasilSearch.toArray(new Folder[0]);
-	}
+            ArrayList<Folder> temp = new ArrayList<>();
+            for (Folder child : current.childFolder) {
+                temp.add(child);
+            }
 
-	Folder searchFolder(Folder root, String folderName) {
-		if (root == null)
-			return null;
+            for (Folder currentTemp : temp) {
+                stack.push(currentTemp);
+            }
+        }
+        return null;
+    }
 
-		Stack<Folder> stack = new Stack<>();
-		stack.push(root);
+    void printAllNode() {
+        Stack<Folder> stack = new Stack<>();
+        stack.push(this);
+        while (!stack.isEmpty()) {
+            Folder current = stack.pop();
+            System.out.println(current.nama);
+            ArrayList<Folder> temp = new ArrayList<>();
+            for (Folder child : current.childFolder) {
+                temp.add(child);
+            }
 
-		while (!stack.isEmpty()) {
-			Folder current = stack.pop();
-			if (current.nama.equals(folderName)) {
-				return current;
-			}
+            for (Folder currentTemp : temp) {
+                stack.push(currentTemp);
+            }
+        }
+    }
 
-			ArrayList<Folder> temp = new ArrayList<>();
-			for (Folder child : current.childFolder) {
-				temp.add(child);
-			}
-
-			for (Folder currentTemp : temp) {
-				stack.push(currentTemp);
-			}
-		}
-		return null;
-	}
 }
